@@ -1,0 +1,6 @@
+./init.sh --sleep
+
+Turns on delay in scripts. Default value is 1 second
+
+To change dafault value edit it in init.sh
+

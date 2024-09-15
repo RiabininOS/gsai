@@ -1,0 +1,9 @@
+./init.sh --version
+
+Shows current version of script and it`s date
+Stores in init.sh as readonly variable
+
+Version format: 0.0.0.0
+
+Date format: dd.mm.yyyy
+

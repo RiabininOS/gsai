@@ -21,20 +21,28 @@ function PrintHelpPage () {
 
     PrintVersion
 
-    echo -e "\
-+------------------------------------------------------------------------------+\n\
-| Possible arguments:                                                          |\n\
-| -- help                                                                      |\n\
-|       prints help page. May be used with extra args.                         |\n\
-|       example:                                                               |\n\
-|       # ./init.sh --help sleep                                               |\n\
-|                                                                              |\n\
-| --sleep                                                                      |\n\
-|       turns on delay between steps. Default value - 3 seconds                |\n\
-| -- version                                                                   |\n\
-|       shows current version of script                                        |\n\
-|                                                                              |\n\
-+------------------------------------------------------------------------------+"
+    case ${1} in
+        "")
+            HF="${SCRIPT_DIR_HELP}/help.txt"
+            ;;
+        "clean")
+            HF="${SCRIPT_DIR_HELP}/help_clean.txt"
+            ;;
+        "sleep")
+            HF="${SCRIPT_DIR_HELP}/help_sleep.txt"
+            ;;
+        "version")
+            HF="${SCRIPT_DIR_HELP}/help_version.txt"
+            ;;
+            
+            
+        *)
+            ;;
+    esac
+
+    cat ${HF} | less
+
+    exit 0
 
 }
 #endregion
@@ -43,20 +51,51 @@ function PrintHelpPage () {
 ### ARGUMENTS READING ###
 #########################
 
+    # no args
+    # --clean
+    # --sleep
+    # --version
+
 PrintVersion
 
 case $SCRIPT_ARGS in
     "")
         echo -e "no args \n"
         ;;
+    *"--clean"*)
+
+        ;;
+    ### HELP SECTION ###
+    #region        
+    *"--help clean"*)
+        echo "help section"
+        PrintHelpPage "clean"
+        exit 0
+        ;;
+
+    *"--help sleep"*)
+        echo "help section"
+        PrintHelpPage "sleep"
+        exit 0
+        ;;
+
+    *"--help version"*)
+        echo "help section"
+        PrintHelpPage "version"
+        exit 0
+        ;;
+
+
     *"--help"*)
         echo "help section"
         PrintHelpPage
         exit 0
         ;;
+    #endregion
+
     *"--sleep"*)
         echo "delay turned on"
-        SLEEP=1
+        SLEEP=$DEFAULT_SLEEP
         ;;
     *"--version"*)
         PrintVersion

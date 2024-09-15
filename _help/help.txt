@@ -1,0 +1,37 @@
++------------------------------------------------------------------------------+
+gsai - the script for Gentoo Linux semi automatic installation
++------------------------------------------------------------------------------+
+General schema of work looks like
+- getting necessary files (isoes, stages)
+- preparing config for installation script via dialog with user
+- building install script
+- runnig installation on current machine
+  or
+  making bootable usb stick for autoinstall
++------------------------------------------------------------------------------+
+Default usage is just to run in terminal
+# ./init.sh
++------------------------------------------------------------------------------+
+
+! Script need root previleges. Recomended to run with root
+  to switch to root you may use
+  # sudo su -
+
++------------------------------------------------------------------------------+
+Available args:
+
+--help
+    shows current help page.
+    can be used with additional keys, such as
+
+    ./init.sh --help clean
+
+    does not support unknown keys
+
+--clean
+    deletes downloaded files in _isoes and _stages folders
+
+    ! that key does not clean configs folders. Use config mge for that
+
+--version
+    shows current version of script
