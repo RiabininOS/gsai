@@ -1,5 +1,5 @@
 ./init.sh --clean
 
-Cleans downloaded files in "stages" folder. No additional asks.
+Cleans downloaded files in "_isoes" and "_stages" folder. No additional asks.
 If folder was cleaned, the lates stages will be downloaded on next start.
 
