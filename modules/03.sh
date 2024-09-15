@@ -20,6 +20,54 @@ function GetInfoFile () {
 }
 #endregion
 
+# check files
+function CheckFiles() {
+
+    local L_BASE_URL="https://distfiles.gentoo.org/releases/amd64/autobuilds"
+
+    # check isoes
+    cd ${SCRIPT_DIR_ISOES}
+
+    for L_FILE in ${SCRIPT_DIR_ISOES}/* ; do
+        local L_FILENAME=$(cat ${L_FILE} | grep .iso | awk '{ print $1 }')
+
+        if [ -f $(echo ${L_FILENAME} | cut -d '/' -f 2) ] ; then
+            echo "$L_FILENAME exist"
+            else 
+                echo loading $(echo ${L_FILENAME} | cut -d '/' -f 2)
+                echo
+
+                touch ${SCRIPT_DIR_ISOES}/$(echo ${L_FILENAME} | cut -d '/' -f 2)
+                #echo "======>" $(echo ${L_FILENAME} | cut -d '/' -f 2)
+                wget ${L_BASE_URL}/${L_FILENAME} -O ${SCRIPT_DIR_ISOES}/$(echo ${L_FILENAME} | cut -d '/' -f 2) 
+                m_echo_ok $L_FILENAME loaded
+        fi
+    done
+    # check stages
+
+    cd ${SCRIPT_DIR_STAGES}
+
+    for L_FILE in ${SCRIPT_DIR_STAGES}/* ; do
+        local L_FILENAME=$(cat ${L_FILE} | grep .tar.xz | awk '{ print $1 }')
+
+        if [ -f $(echo ${L_FILENAME} | cut -d '/' -f 2) ] ; then
+            echo "$L_FILENAME exist"
+            else 
+                echo loading $(echo ${L_FILENAME} | cut -d '/' -f 2)
+                echo
+
+                touch ${SCRIPT_DIR_STAGES}/$(echo ${L_FILENAME} | cut -d '/' -f 2)
+                #echo "======>" $(echo ${L_FILENAME} | cut -d '/' -f 2)
+                wget ${L_BASE_URL}/${L_FILENAME} -O ${SCRIPT_DIR_STAGES}/$(echo ${L_FILENAME} | cut -d '/' -f 2) 
+                m_echo_ok $L_FILENAME loaded
+        fi
+    done
+    
+}
+#region
+
+#endregion
+
 ##############################
 ### CHECKING ISO AND STAGE ###
 ##############################
@@ -27,7 +75,7 @@ function GetInfoFile () {
 ### gettint latest ISO
 
 cd ${SCRIPT_DIR_ISOES}
-rm -f *  
+rm -f *.txt  
 
 GetInfoFile _isoes latest-install-amd64-minimal.txt
 GetInfoFile _isoes latest-livegui-amd64.txt
@@ -36,7 +84,7 @@ GetInfoFile _isoes latest-admincd-amd64.txt
 ### gettint latest ISO
 
 cd ${SCRIPT_DIR_STAGES}
-rm -f *  
+rm -f *.txt  
 
 GetInfoFile _stages latest-stage3-amd64-desktop-openrc.txt	 
 GetInfoFile _stages latest-stage3-amd64-desktop-systemd.txt	 
@@ -56,5 +104,7 @@ GetInfoFile _stages latest-stage3-amd64-systemd.txt
 GetInfoFile _stages latest-stage3-x32-openrc.txt	 
 GetInfoFile _stages latest-stage3-x32-systemd.txt	 
 #latest-stage3.txt	 
+
+CheckFiles
 
 cd ${SCRIPT_DIR_BASIC}

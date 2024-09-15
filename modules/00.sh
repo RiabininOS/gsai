@@ -63,7 +63,11 @@ case $SCRIPT_ARGS in
         echo -e "no args \n"
         ;;
     *"--clean"*)
-
+        cd ${SCRIPT_DIR_ISOES}
+        rm -f *
+        cd ${SCRIPT_DIR_STAGES}
+        rm -f *
+        cd ${SCRIPT_DIR_BASIC}
         ;;
     ### HELP SECTION ###
     #region        
